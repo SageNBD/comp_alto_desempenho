@@ -23,6 +23,7 @@ void generate_metrics(int **mat, int c, int nrows, int ncols, StatsMetrics metri
     {
         int **new_mat = copy_matrix(mat, nrows, ncols);
         metrics.medians[c] = median(new_mat[c], nrows);
+        free(new_mat);
     }
     #pragma omp task
         metrics.modes[c] = mode(mat[c], nrows);

@@ -7,6 +7,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <math.h>
 #include "stats.h"
@@ -158,8 +159,15 @@ int mode(int *vec, int size)
         if (vec[i] > num_elements)
             num_elements = vec[i];
 
+    /*
     int *freq = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the frequency of a value
     int *pos = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the very first time a value was found
+    */  
+    int freq[num_elements];
+    int pos[num_elements];
+
+    memset(freq, 0, sizeof(freq));
+    memset(pos, 0, sizeof(pos));
 
     int max = 0, current_mode;
     for (int i = 0; i < size; ++i) 
@@ -179,9 +187,13 @@ int mode(int *vec, int size)
             current_mode = vec[i];
         }
     }
+
+    //printf("%p %p %d\n", freq, pos, num_elements);
     
+    /*
     free(freq);
     free(pos);
+    */
 
     return (max != 1 ? current_mode : -1); // If no element is ever repeated, return -1
 }
