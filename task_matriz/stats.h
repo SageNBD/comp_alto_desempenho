@@ -22,12 +22,12 @@ typedef struct {
 
 StatsMetrics create_stats_metrics(int ncols);
 void deallocate_StatsMetrics(StatsMetrics metrics);
-double average(int *vec, int c);
-double harmonic(int *vec, int size);
+double average(double *vec, int c);
+double harmonic(double *vec, int size);
 int compare(const void *a, const void *b);
-double median(int *vec, int size);
-double variance(int *vec, int size, double avg);
-int mode(int *vec, int size);
+double median(double *vec, int size);
+double variance(double *vec, int size, double avg);
+int mode(double *vec, int size);
 void print_all_metrics(StatsMetrics metrics);
 
 #endif

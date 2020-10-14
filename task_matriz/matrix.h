@@ -9,8 +9,8 @@
 #ifndef _MATRIX_H_
 #define _MATRIX_H_
 
-int **alloc_matrix(int r, int c);
-int **copy_matrix(int **mat, int r, int c);
+double **alloc_matrix(int r, int c);
+double **copy_matrix(double **mat, int r, int c);
 void destroy_matrix(int r, void **mat);
 
 #endif

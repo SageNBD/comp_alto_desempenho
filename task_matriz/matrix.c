@@ -22,16 +22,16 @@
  * 
  * @return: int**   matrix:   dynamically allocated matrix
  */      
-int **alloc_matrix(int r, int c)
+double **alloc_matrix(int r, int c)
 {
-    int **mat = (int **) malloc(sizeof(int *) * c);
+    double **mat = (double **) malloc(sizeof(double *) * c);
 
     for (int i = 0; i < c; ++i) 
-        mat[i] = (int *) malloc(sizeof(int) * r);
+        mat[i] = (double *) malloc(sizeof(double) * r);
 
     for (int i = 0; i < r; ++i) {
         for (int j = 0; j < c; ++j) {
-            scanf("%d", &mat[j][i]); // swaps rows and columns
+            scanf("%lf", &mat[j][i]); // swaps rows and columns
         }
     }
 
@@ -49,14 +49,14 @@ int **alloc_matrix(int r, int c)
  * 
  * @return  int**   new_mat    copy of dynamically allocated matrix
  */
-int **copy_matrix(int **mat, int r, int c)
+double **copy_matrix(double **mat, int r, int c)
 {
-    int **new_mat = (int **) malloc(sizeof(int *) * c);
+    double **new_mat = (double **) malloc(sizeof(double *) * c);
 
     for (int i = 0; i < c; ++i) 
     {
-        new_mat[i] = (int *) malloc(sizeof(int) * r);
-        memcpy(new_mat[i], mat[i], sizeof(int) * r);
+        new_mat[i] = (double *) malloc(sizeof(double) * r);
+        memcpy(new_mat[i], mat[i], sizeof(double) * r);
     }
 
     return new_mat;

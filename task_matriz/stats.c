@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include "stats.h"
 
 /*
@@ -66,12 +67,12 @@ void deallocate_StatsMetrics(StatsMetrics metrics)
  * 
  * @return  double  avg     average of each element
  */
-double average(int *vec, int size) 
+double average(double *vec, int size) 
 {
     double sum = 0;
     for (int i = 0; i < size; ++i)
         sum += vec[i];
-    return sum / (double) size;
+    return sum / size;
 }
 
 /*
@@ -84,15 +85,15 @@ double average(int *vec, int size)
  * 
  * @return  double  hmean   harmonic mean of elements
  */
-double harmonic(int *vec, int size) 
+double harmonic(double *vec, int size) 
 {
     double sum = 0;
     for (int i = 0; i < size; ++i)
     {
         if (vec[i] == 0) return 0;
-        sum += 1 / (double) vec[i];
+        sum += 1 /  vec[i];
     }
-    return (double) size / sum;
+    return  size / sum;
 }
 
 /* 
@@ -102,7 +103,7 @@ double harmonic(int *vec, int size)
  */
 int compare(const void *a, const void *b)
 {
-    return (*(int *)a - *(int *)b );
+    return (*(double *)a - *(double *)b );
 }
 
 /*
@@ -115,10 +116,10 @@ int compare(const void *a, const void *b)
  * 
  * @return  double  median  central element of sorted array
  */
-double median(int *vec, int size) 
+double median(double *vec, int size) 
 {
-    qsort(vec, size, sizeof(int), compare);
-    return size % 2 != 0 ? vec[size / 2] : ((double)vec[size / 2] + vec[(size/2)-1])/2; // Handles even arrays
+    qsort(vec, size, sizeof(double), compare);
+    return size % 2 != 0 ? vec[size / 2] : (vec[size / 2] + vec[(size/2)-1])/2; // Handles even arrays
 }
 
 /*
@@ -132,7 +133,7 @@ double median(int *vec, int size)
  * 
  * @return  double  variance  variance of given array
  */
-double variance(int *vec, int size, double avg)
+double variance(double *vec, int size, double avg)
 {
     double sum = 0;
     for(int i = 0; i < size; i++)
@@ -151,37 +152,43 @@ double variance(int *vec, int size, double avg)
  * 
  * @return  int     mode    most frequent value in array
  */
-int mode(int *vec, int size) 
+int mode(double *vec, int size) 
 {
     int num_elements = 0;
     for (int i = 0; i < size; ++i) 
-        if (vec[i] > num_elements)
-            num_elements = vec[i];
+        if ((int)vec[i] > num_elements)
+            num_elements = (int)vec[i];
 
-    int *freq = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the frequency of a value
-    int *pos = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the very first time a value was found
+    // int *freq = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the frequency of a value
+    // int *pos = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the very first time a value was found
+    
+    int freq[num_elements];
+    int pos[num_elements];
+
+    memset(freq, 0, sizeof(freq));
+    memset(pos, 0, sizeof(pos));
 
     int max = 0, current_mode;
     for (int i = 0; i < size; ++i) 
     {
-        if (pos[vec[i] - 1] == 0)
-            pos[vec[i] - 1] = i + 1;
+        if (pos[(int)vec[i] - 1] == 0)
+            pos[(int)vec[i] - 1] = i + 1;
 
         // If two values are competing for being the mode, get the one that appeared first in the array
-        if (++freq[vec[i] - 1] == max && pos[vec[i] - 1] < pos[current_mode])
+        if (++freq[(int)vec[i] - 1] == max && pos[(int)vec[i] - 1] < pos[current_mode])
         {
-            max = freq[vec[i] - 1];
+            max = freq[(int)vec[i] - 1];
             current_mode = vec[i];
         }
-        else if (freq[vec[i] - 1] > max) 
+        else if (freq[(int)vec[i] - 1] > max) 
         {                
-            max = freq[vec[i] - 1];
-            current_mode = vec[i];
+            max = freq[(int)vec[i] - 1];
+            current_mode = (int)vec[i];
         }
     }
     
-    free(freq);
-    free(pos);
+    // free(freq);
+    // free(pos);
 
     return (max != 1 ? current_mode : -1); // If no element is ever repeated, return -1
 }
