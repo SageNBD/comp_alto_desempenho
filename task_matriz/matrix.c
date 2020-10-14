@@ -12,7 +12,7 @@
 #include "matrix.h"
 
 /* 
- * int **alloc_matrix(int r, int c)
+ * double **alloc_matrix(int r, int c)
  * 
  * Allocates and fills matrix. Here we swap rows and columns so that it's easier for the calculations, 
  * since they will be per column instead of per row.
@@ -20,7 +20,7 @@
  * @param   int     r   number of rows
  * @param   int     c   number of columns
  * 
- * @return: int**   matrix:   dynamically allocated matrix
+ * @return: double**   matrix:   dynamically allocated matrix
  */      
 double **alloc_matrix(int r, int c)
 {
@@ -39,15 +39,15 @@ double **alloc_matrix(int r, int c)
 }
 
 /*
- * int **copy_matrix(int **mat, int r, int c)
+ * double **copy_matrix(int **mat, int r, int c)
  * 
  * Creates a copy of a matrix, so that we don't change the original one.
  * 
- * @param   int**   mat     original matrix to be copied
+ * @param   double**   mat     original matrix to be copied
  * @param   int     r       number of rows   
  * @param   int     c       number of columns   
  * 
- * @return  int**   new_mat    copy of dynamically allocated matrix
+ * @return  double**   new_mat    copy of dynamically allocated matrix
  */
 double **copy_matrix(double **mat, int r, int c)
 {

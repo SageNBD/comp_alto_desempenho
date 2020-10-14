@@ -23,9 +23,9 @@ void generate_metrics(double **mat, int c, int nrows, int ncols, StatsMetrics me
         metrics.harms[c] = harmonic(mat[c], nrows);
     #pragma omp task
     {
-        double **new_mat = copy_matrix(mat, nrows, ncols);
-        metrics.medians[c] = median(new_mat[c], nrows);
-        free(new_mat);
+       // double **new_mat = copy_matrix(mat, nrows, ncols);
+        metrics.medians[c] = median(mat[c], nrows);
+       // free(new_mat);
     }
     #pragma omp task
         metrics.modes[c] = mode(mat[c], nrows);
@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     double wtime = omp_get_wtime();
 
     #pragma omp parallel
+    
     {
         int id = omp_get_thread_num();
         int num_threads = omp_get_num_threads();

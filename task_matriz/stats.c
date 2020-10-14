@@ -59,12 +59,12 @@ void deallocate_StatsMetrics(StatsMetrics metrics)
 }
 
 /*
- * double average(int *vec, int c)
+ * double average(double *vec, int c)
  * 
  * Gets arithmetic mean of a vector of size 'c'
  * 
- * @param   int*    vec     vector of integers
- * @param   int     size    number of elements
+ * @param   double* vec     vector of doubles
+ * @param   int      size    number of elements
  * 
  * @return  double  avg     average of each element
  */
@@ -77,12 +77,12 @@ double average(double *vec, int size)
 }
 
 /*
- * double harmonic(int *vec, int size)
+ * double harmonic(double *vec, int size)
  * 
  * Gets harmonic mean of elements in a vector
  * 
- * @param   int*    vec     vector of integers
- * @param   int     size    number of elements
+ * @param   double*  vec     vector of doubles
+ * @param   int      size    number of elements
  * 
  * @return  double  hmean   harmonic mean of elements
  */
@@ -98,7 +98,7 @@ double harmonic(double *vec, int size)
 }
 
 /* 
- * int compare(const void *a, const void *b)
+ * double compare(const void *a, const void *b)
  * 
  * Utility method for qsort
  */
@@ -108,12 +108,12 @@ int compare(const void *a, const void *b)
 }
 
 /*
- * double median(int *vec, int size)
+ * double median(double *vec, int size)
  * 
  * Sorts the array, gets center element to get the median
  * 
- * @param   int*    vec     vector of integers
- * @param   int     size    number of elements
+ * @param   double*  vec     vector of doubles
+ * @param   int      size    number of elements
  * 
  * @return  double  median  central element of sorted array
  */
@@ -124,13 +124,13 @@ double median(double *vec, int size)
 }
 
 /*
- * double variance(int *vec, int size, double avg)
+ * double variance(double *vec, int size, double avg)
  * 
  * Gets the variance, given the pre-calculated average
  * 
- * @param   int*    vec     vector of integers
- * @param   int     size    number of elements
- * @param   double  avg     average of array
+ * @param   double*  vec     vector of doubles
+ * @param   int      size    number of elements
+ * @param   double   avg     average of array
  * 
  * @return  double  variance  variance of given array
  */
@@ -144,14 +144,14 @@ double variance(double *vec, int size, double avg)
 }
 
 /*
- * double mode(int *vec, int size)
+ * double mode(double *vec, int size)
  * 
  * Gets mode, treats input as integers
  * 
- * @param   int*    vec     vector of integers
- * @param   int     size    number of elements
+ * @param   double*  vec     vector of doubles
+ * @param   int      size    number of elements
  * 
- * @return  int     mode    most frequent value in array
+ * @return  int      mode    most frequent value in array
  */
 int mode(double *vec, int size) 
 {
@@ -160,16 +160,10 @@ int mode(double *vec, int size)
         if ((int)vec[i] > num_elements)
             num_elements = (int)vec[i];
 
-<<<<<<< HEAD
-    // int *freq = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the frequency of a value
-    // int *pos = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the very first time a value was found
-    
-=======
     /*
     int *freq = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the frequency of a value
     int *pos = (int *) calloc(num_elements, sizeof(int)); // Array to indicate the very first time a value was found
     */  
->>>>>>> origin/fix/double_free_or_corruption
     int freq[num_elements];
     int pos[num_elements];
 
@@ -179,33 +173,21 @@ int mode(double *vec, int size)
     int max = 0, current_mode;
     for (int i = 0; i < size; ++i) 
     {
-        if (pos[(int)vec[i] - 1] == 0)
-            pos[(int)vec[i] - 1] = i + 1;
+        if (pos[(int)floor(vec[i]) - 1] == 0)
+            pos[(int)floor(vec[i]) - 1] = i + 1;
 
         // If two values are competing for being the mode, get the one that appeared first in the array
-        if (++freq[(int)vec[i] - 1] == max && pos[(int)vec[i] - 1] < pos[current_mode])
+        if (++freq[(int)floor(vec[i]) - 1] == max && pos[(int)floor(vec[i]) - 1] < pos[current_mode])
         {
-            max = freq[(int)vec[i] - 1];
-            current_mode = vec[i];
+            max = freq[(int)floor(vec[i]) - 1];
+            current_mode = floor(vec[i]);
         }
-        else if (freq[(int)vec[i] - 1] > max) 
+        else if (freq[(int)floor(vec[i]) - 1] > max) 
         {                
-            max = freq[(int)vec[i] - 1];
-            current_mode = (int)vec[i];
+            max = freq[(int)floor(vec[i]) - 1];
+            current_mode = (int)floor(vec[i]);
         }
     }
-
-    //printf("%p %p %d\n", freq, pos, num_elements);
-    
-<<<<<<< HEAD
-    // free(freq);
-    // free(pos);
-=======
-    /*
-    free(freq);
-    free(pos);
-    */
->>>>>>> origin/fix/double_free_or_corruption
 
     return (max != 1 ? current_mode : -1); // If no element is ever repeated, return -1
 }
