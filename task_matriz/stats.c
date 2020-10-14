@@ -119,8 +119,10 @@ int compare(const void *a, const void *b)
  */
 double median(double *vec, int size) 
 {
+    double vec_copy[size];
+    memcpy(vec_copy, vec, sizeof(double) * size);
     qsort(vec, size, sizeof(double), compare);
-    return size % 2 != 0 ? vec[size / 2] : (vec[size / 2] + vec[(size/2)-1])/2; // Handles even arrays
+    return size % 2 != 0 ? vec_copy[size / 2] : (vec_copy[size / 2] + vec_copy[(size/2)-1])/2; // Handles even arrays
 }
 
 /*
