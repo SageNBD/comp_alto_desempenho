@@ -1,3 +1,11 @@
+/*
+        Grupo: 8
+        Nome: Abner Eduardo Silveira Santos             NUSP: 10692012
+        Nome: Gyovana Mayara Moriyama                   NUSP: 10734387
+        Nome: Henrique Matarazo Camillo                 NUSP: 10294943
+        Nome: Vitor Augusto de Oliveira                 NUSP: 9360815
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +49,7 @@ int  main(int argc, char *argv[])
 		dest = npes != (myrank+1) ? myrank + 1 : 0;
 		MPI_Send((void*)&token, 1, MPI_INT, dest, msgtag, MPI_COMM_WORLD);
 	}
-	
+
 	fflush(0);
 	MPI_Finalize();
 	return 0;
